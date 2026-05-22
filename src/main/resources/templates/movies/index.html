@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Movie Library</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+
+<header>
+  <h1>🎬 Movie Library</h1>
+  <a class="btn btn-primary" th:href="@{/movies/new}">+ Add Movie</a>
+</header>
+
+<div class="toolbar">
+  <form method="get" th:action="@{/movies}" class="search-form">
+    <input type="text" name="q" placeholder="Search by title or director..."
+           th:value="${q}"/>
+    <select name="genre" onchange="this.form.submit()">
+      <option value="">All Genres</option>
+      <option th:each="g : ${genres}"
+              th:value="${g}"
+              th:text="${g}"
+              th:selected="${g == selectedGenre}"/>
+    </select>
+    <button type="submit" class="btn btn-secondary">Search</button>
+    <a th:href="@{/movies}" class="btn btn-secondary">Clear</a>
+  </form>
+</div>
+
+<div class="grid">
+  <div class="card" th:each="movie : ${movies}">
+    <div class="card-title" th:text="${movie.title}"></div>
+    <div class="card-director">by <span th:text="${movie.director}"></span></div>
+    <div class="card-meta">
+      <span class="badge badge-genre" th:text="${movie.genre ?: 'Unknown'}"></span>
+      <span class="badge badge-year" th:text="${movie.year}"></span>
+      <span class="badge badge-rating" th:text="'★ ' + ${movie.rating} + '/10'"></span>
+    </div>
+    <div class="card-actions">
+      <a class="btn btn-secondary" th:href="@{/movies/{id}/edit(id=${movie.id})}">Edit</a>
+      <form th:action="@{/movies/{id}/delete(id=${movie.id})}" method="post"
+            onsubmit="return confirm('Delete this movie?')">
+        <button type="submit" class="btn btn-danger">Delete</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="empty" th:if="${#lists.isEmpty(movies)}">No movies found.</div>
+
+</body>
+</html>
