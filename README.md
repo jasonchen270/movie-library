@@ -1,6 +1,6 @@
 # movie-library
 
-A server-rendered movie catalog web app built with Spring Boot 3, Thymeleaf, and Java 17, where you browse, add, edit, and delete movies through validated HTML views backed by a Spring Data JPA layer over an in-memory H2 database.
+A server-rendered movie catalog web app built with Spring Boot, Thymeleaf, and Java, where you browse, add, edit, and delete movies through validated HTML views backed by a Spring Data JPA layer over an in-memory H2 database.
 
 ## Prerequisites
 
